@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/image"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:background="@android:color/holo_purple"
+                android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:layout_weight="0.4"
+                android:orientation="vertical"
+                android:id="@+id/container"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:editable="false"
+                        android:id="@+id/et_item_id"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/txt_id" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/txt_name" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/et_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/txt_description" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/et_cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="@string/txt_cost" />
+                </android.support.design.widget.TextInputLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:scaleType="center"
+            android:visibility="gone"
+            android:src="@drawable/ic_action_content_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:clickable="true"
+            app:layout_anchor="@id/image"
+            app:layout_anchorGravity="bottom|right|end"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/camera"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:clickable="true"-->
+        <!--android:layout_gravity="top|center"-->
+        <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+        <!--android:src="@drawable/ic_attachment"-->
+        <!--app:fabSize="normal"-->
+        <!--app:backgroundTint="@color/gray"-->
+        <!--app:layout_anchor="@+id/fab"-->
+        <!--app:layout_anchorGravity="top|center" />-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
+        <!--android:clickable="true"-->
+        <!--android:scaleType="center"-->
+        <!--android:src="@drawable/ic_attachment"-->
+        <!--app:layout_anchor="@id/container"-->
+        <!--app:backgroundTint="@color/gray"-->
+        <!--app:layout_anchorGravity="bottom|right|end" />-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
+        <!--android:clickable="true"-->
+        <!--android:scaleType="center"-->
+        <!--android:src="@drawable/ic_attachment"-->
+        <!--app:layout_anchor="@id/container"-->
+        <!--app:backgroundTint="@color/gray"-->
+        <!--app:layout_anchorGravity="bottom|right|end" />-->
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_save"
+        android:text="@string/txt_save"
+        app:layout_anchor="@+id/btn_cancel"
+        app:layout_anchorGravity="bottom|right|end"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_alignBaseline="@+id/btn_save"
+        android:layout_toLeftOf="@+id/btn_save"
+        android:id="@+id/btn_cancel"
+        android:text="@string/txt_cancel"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
