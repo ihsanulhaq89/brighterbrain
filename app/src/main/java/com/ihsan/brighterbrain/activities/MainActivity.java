@@ -51,24 +51,13 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
         return R.layout.activity_main;
     }
 
-
-
-    private void showDialog(){
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-// ...Irrelevant code for customizing the buttons and title
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.activity_add_item, null);
-        dialogBuilder.setView(dialogView);
-
-        //EditText editText = (EditText) dialogView.findViewById(R.id.label_field);
-        //editText.setText("test label");
-        AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.show();
-    }
-
     @Override
     public void onClick(View v) {
         TransitionManager.slideUp(this, AddItemActivity.class);
-        //showDialog();
+    }
+
+    @Override
+    protected String getActivityTitle() {
+        return getString(R.string.txt_collection);
     }
 }

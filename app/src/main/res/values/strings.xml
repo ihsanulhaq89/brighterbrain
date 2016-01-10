@@ -10,4 +10,8 @@
     <string name="compulsory">This field is mandatory</string>
     <string name="txt_save">SAVE</string>
     <string name="txt_cancel">CANCEL</string>
+    <string name="txt_close">CLOSE</string>
+    <string name="txt_collection">Collections</string>
+    <string name="txt_new_item">New item</string>
+    <string name="txt_item_detail">Item detail</string>
 </resources>

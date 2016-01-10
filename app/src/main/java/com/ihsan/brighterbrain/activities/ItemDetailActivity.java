@@ -1,18 +1,13 @@
 package com.ihsan.brighterbrain.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.ihsan.brighterbrain.R;
+import com.ihsan.brighterbrain.commons.Constants;
 import com.ihsan.brighterbrain.commons.MediaUtils;
 import com.ihsan.brighterbrain.models.Item;
 import com.orm.SugarRecord;
@@ -20,41 +15,33 @@ import com.orm.SugarRecord;
 /**
  * Created by ihsan on 1/10/2016.
  */
-public class ItemDetailActivity extends BaseAppCompatActivity implements View.OnClickListener {
-    private ImageView attachment;
-    private FloatingActionButton removeAttachmentBtn;
-    private EditText name;
-    private EditText description;
-    private EditText cost;
-    private EditText id;
-    private Button save;
-    private Button cancel;
-    private Item item;
+public class ItemDetailActivity extends BaseItemActivity {
     private Menu menu;
     private boolean isEditMode = false;
-    private String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState != null){
-            isEditMode = savedInstanceState.getBoolean("editmode");
+            isEditMode = savedInstanceState.getBoolean(Constants.EDIT_MODE);
         }
-        item = (Item) getIntent().getExtras().getSerializable("ITEM");
+        item = (Item) getIntent().getExtras().getSerializable(Constants.ITEM_SERIALIZABLE);
+        filePath = item.getImage();
         if(!isEditMode){
             paint();
+            setFab();
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean("editmode", isEditMode);
+        savedInstanceState.putBoolean(Constants.EDIT_MODE, isEditMode);
         super.onSaveInstanceState(savedInstanceState);
     }
-    private void clearAttachment() {
-        filePath = null;
-        attachment.setVisibility(View.GONE);
-        removeAttachmentBtn.setVisibility(View.GONE);
+
+    @Override
+    protected void clearAttachment() {
+        super.clearAttachment();
         setMenu();
     }
     private void paint() {
@@ -64,11 +51,10 @@ public class ItemDetailActivity extends BaseAppCompatActivity implements View.On
         id.setText(item.getId() + "");
         if(item.getImage() != null && !item.getImage().isEmpty()){
             MediaUtils.setImageFromFile(this, item.getImage(), attachment);
-            attachment.setVisibility(View.VISIBLE);
         }else {
             clearAttachment();
         }
-        removeAttachmentBtn.setVisibility(View.GONE);
+        fab.setVisibility(View.GONE);
         save.setEnabled(false);
         cost.setEnabled(false);
         name.setEnabled(false);
@@ -77,15 +63,9 @@ public class ItemDetailActivity extends BaseAppCompatActivity implements View.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            if(isEditMode) {
-                MediaUtils.createImageChooser(this);
-            }
-            else {
+            if(!isEditMode) {
                 setEditMode();
             }
             return true;
@@ -102,7 +82,6 @@ public class ItemDetailActivity extends BaseAppCompatActivity implements View.On
         this.finish();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,11 +96,10 @@ public class ItemDetailActivity extends BaseAppCompatActivity implements View.On
             return;
         }
         if(isEditMode){
-            if(attachment.getVisibility() != View.GONE){
+            if(filePath != null){
                 menu.getItem(1).setVisible(false);
             }else {
                 menu.getItem(1).setVisible(true);
-                menu.getItem(1).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_action_file_attachment));
             }
         }else {
             menu.getItem(1).setVisible(true);
@@ -131,27 +109,8 @@ public class ItemDetailActivity extends BaseAppCompatActivity implements View.On
 
     @Override
     protected void initComponents() {
-        attachment = (ImageView) findViewById(R.id.image);
-        removeAttachmentBtn = (FloatingActionButton) findViewById(R.id.fab);
-        name = (EditText) findViewById(R.id.et_name);
-        description = (EditText) findViewById(R.id.et_description);
-        cost = (EditText) findViewById(R.id.et_cost);
-        save = (Button) findViewById(R.id.btn_save);
-        id = (EditText) findViewById(R.id.et_item_id);
-        cancel = (Button) findViewById(R.id.btn_cancel);
+        super.initComponents();
         id.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected void setListeners() {
-        removeAttachmentBtn.setOnClickListener(this);
-        save.setOnClickListener(this);
-        cancel.setOnClickListener(this);
-    }
-
-    @Override
-    protected int getXMLLayoutID() {
-        return R.layout.activity_add_item;
     }
 
     @Override
@@ -166,7 +125,11 @@ public class ItemDetailActivity extends BaseAppCompatActivity implements View.On
                 }
                 break;
             case R.id.fab:
-                clearAttachment();
+                if(filePath != null) {
+                    clearAttachment();
+                }else {
+                    MediaUtils.createImageChooser(this);
+                }
                 break;
             case R.id.btn_save:
                 saveItem();
@@ -174,37 +137,14 @@ public class ItemDetailActivity extends BaseAppCompatActivity implements View.On
 
         }
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        String filePath = MediaUtils.getImagePathFromActivityResult(this, requestCode, resultCode, data);
-        if(MediaUtils.setImageFromFile(this, filePath, attachment)){
-            this.filePath = filePath;
-            attachment.setVisibility(View.VISIBLE);
-            removeAttachmentBtn.setVisibility(View.VISIBLE);
-        }
-    }
 
-    private boolean validate(EditText et){
-        if(et.getText().toString().isEmpty()) {
-            et.setError(getString(R.string.compulsory));
-            return true;
-        }
-        return false;
-    }
-    private void saveItem(){
-        boolean error = validate(cost);
-        error = error | validate(name);
-        error = error | validate(description);
-        if(!error) {
-            item.setCost(cost.getText().toString());
-            item.setName(name.getText().toString());
-            item.setDescription(description.getText().toString());
-            item.setDescription(description.getText().toString());
-            item.setImage(filePath);
-            SugarRecord.save(item);
-            Toast.makeText(this, item.getName() + " updated!", Toast.LENGTH_SHORT);
+    @Override
+    protected boolean saveItem(){
+        boolean result = super.saveItem();
+        if(result){
             setReadMode();
         }
+        return result;
     }
 
     private void setEditMode(){
@@ -213,14 +153,34 @@ public class ItemDetailActivity extends BaseAppCompatActivity implements View.On
         name.setEnabled(true);
         description.setEnabled(true);
         save.setEnabled(true);
-        if(attachment.getVisibility() != View.GONE){
-            removeAttachmentBtn.setVisibility(View.VISIBLE);
-        }
+        setFab();
         setMenu();
+        cancel.setText(getString(R.string.txt_cancel));
     }
+
+    protected void setFab() {
+        if(isEditMode) {
+            if (filePath == null) {
+                fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_file_attachment));
+            } else {
+                fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_content_clear));
+            }
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+        }
+    }
+
     private void setReadMode(){
         isEditMode = false;
         paint();
         setMenu();
+        setFab();
+        cancel.setText(getString(R.string.txt_close));
+    }
+
+    @Override
+    protected String getActivityTitle() {
+        return getString(R.string.txt_item_detail);
     }
 }

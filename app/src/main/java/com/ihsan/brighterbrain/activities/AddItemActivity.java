@@ -2,8 +2,7 @@ package com.ihsan.brighterbrain.activities;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,97 +17,7 @@ import com.orm.SugarRecord;
 /**
  * Created by ihsan on 1/9/2016.
  */
-public class AddItemActivity extends BaseAppCompatActivity implements View.OnClickListener {
-
-    private ImageView attachment;
-    private FloatingActionButton removeAttachmentBtn;
-    private EditText name;
-    private EditText description;
-    private EditText cost;
-    private Button save;
-    private Button cancel;
-    private String filePath;
-
-    @Override
-    protected void initComponents() {
-        attachment = (ImageView) findViewById(R.id.image);
-        removeAttachmentBtn = (FloatingActionButton) findViewById(R.id.fab);
-        name = (EditText) findViewById(R.id.et_name);
-        description = (EditText) findViewById(R.id.et_description);
-        cost = (EditText) findViewById(R.id.et_cost);
-        save = (Button) findViewById(R.id.btn_save);
-        cancel = (Button) findViewById(R.id.btn_cancel);
-    }
-
-    @Override
-    protected void setListeners() {
-        removeAttachmentBtn.setOnClickListener(this);
-        save.setOnClickListener(this);
-        cancel.setOnClickListener(this);
-    }
-
-    @Override
-    protected int getXMLLayoutID() {
-        return R.layout.activity_add_item;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            MediaUtils.createImageChooser(this);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        String filePath = MediaUtils.getImagePathFromActivityResult(this, requestCode, resultCode, data);
-        if(MediaUtils.setImageFromFile(this, filePath, attachment)){
-            this.filePath = filePath;
-            attachment.setVisibility(View.VISIBLE);
-            removeAttachmentBtn.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private boolean validate(EditText et){
-        if(et.getText().toString().isEmpty()) {
-            et.setError(getString(R.string.compulsory));
-            return true;
-        }
-        return false;
-    }
-
-    private void saveItem(){
-        boolean error = validate(cost);
-        error = error | validate(name);
-        error = error | validate(description);
-        if(!error) {
-            Item item = new Item();
-            item.setCost(cost.getText().toString());
-            item.setName(name.getText().toString());
-            item.setDescription(description.getText().toString());
-            item.setDescription(description.getText().toString());
-            item.setImage(filePath);
-            SugarRecord.save(item);
-            Toast.makeText(this, item.getName() + " added!", Toast.LENGTH_SHORT);
-            this.finish();
-        }
-    }
+public class AddItemActivity extends BaseItemActivity  {
 
     @Override
     public void onClick(View v) {
@@ -120,14 +29,36 @@ public class AddItemActivity extends BaseAppCompatActivity implements View.OnCli
                 saveItem();
                 break;
             case R.id.fab:
-                clearAttachment();
+                if(filePath == null){
+                    MediaUtils.createImageChooser(this);
+                }else {
+                    clearAttachment();
+                }
                 break;
         }
-
     }
 
-    private void clearAttachment() {
-        attachment.setVisibility(View.GONE);
-        removeAttachmentBtn.setVisibility(View.GONE);
+    @Override
+    protected void setFab() {
+        if (filePath == null) {
+            fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_file_attachment));
+        } else {
+            fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_action_content_clear));
+        }
+    }
+
+    @Override
+    protected boolean saveItem(){
+        item = new Item();
+        boolean result = super.saveItem();
+        if(result){
+            this.finish();
+        }
+        return result;
+    }
+
+    @Override
+    protected String getActivityTitle() {
+        return getString(R.string.txt_new_item);
     }
 }

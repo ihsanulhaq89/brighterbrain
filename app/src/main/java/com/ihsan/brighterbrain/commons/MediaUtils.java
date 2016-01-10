@@ -22,13 +22,11 @@ import java.io.IOException;
  * Created by ihsan on 1/10/2016.
  */
 public class MediaUtils {
-    private static final int REQUEST_CODE = 999;
-
 
     public static String getImagePathFromActivityResult(Activity context, int requestCode, int resultCode, Intent data) {
         String selectedImagePath = null;
         if (resultCode == context.RESULT_OK) {
-            if (requestCode == MediaUtils.REQUEST_CODE) {
+            if (requestCode == Constants.MEDIA_REQUEST_CODE) {
                 Uri selectedImageUri = data.getData();
                 selectedImagePath = getPathStringFromUri(context, selectedImageUri);
             }
@@ -70,7 +68,7 @@ public class MediaUtils {
 
         Intent[] intentArray =  {cameraIntent};
         chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-        context.startActivityForResult(chooser,REQUEST_CODE);
+        context.startActivityForResult(chooser, Constants.MEDIA_REQUEST_CODE);
     }
     public static boolean setImageFromFile(Context context, String imageFilePath, ImageView imageView) {
         if(imageFilePath == null){

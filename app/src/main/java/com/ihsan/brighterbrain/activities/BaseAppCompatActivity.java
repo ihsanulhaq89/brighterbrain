@@ -14,7 +14,10 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity{
         setContentView(getXMLLayoutID());
         initComponents();
         setListeners();
+        setTitle(getActivityTitle());
     }
+
+    protected abstract String getActivityTitle();
     protected abstract void initComponents();
     protected abstract void setListeners();
     protected abstract int getXMLLayoutID();

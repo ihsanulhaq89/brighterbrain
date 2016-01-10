@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ihsan.brighterbrain.R;
 import com.ihsan.brighterbrain.activities.ItemDetailActivity;
+import com.ihsan.brighterbrain.commons.Constants;
 import com.ihsan.brighterbrain.commons.MediaUtils;
 import com.ihsan.brighterbrain.commons.TransitionManager;
 import com.ihsan.brighterbrain.models.Item;
@@ -41,7 +42,7 @@ public class ItemsViewHolder extends ViewHolder implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         Bundle b = new Bundle();
-        b.putSerializable("ITEM", item);
+        b.putSerializable(Constants.ITEM_SERIALIZABLE, item);
         TransitionManager.transitFrom(context, ItemDetailActivity.class, b);
     }
 }
