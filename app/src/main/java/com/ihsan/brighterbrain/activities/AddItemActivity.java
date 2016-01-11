@@ -1,18 +1,13 @@
 package com.ihsan.brighterbrain.activities;
 
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ihsan.brighterbrain.R;
+import com.ihsan.brighterbrain.commons.Constants;
 import com.ihsan.brighterbrain.commons.MediaUtils;
 import com.ihsan.brighterbrain.models.Item;
-import com.orm.SugarRecord;
 
 /**
  * Created by ihsan on 1/9/2016.
@@ -52,6 +47,8 @@ public class AddItemActivity extends BaseItemActivity  {
         item = new Item();
         boolean result = super.saveItem();
         if(result){
+            item.saveToParse();
+            Toast.makeText(this, item.getName() + Constants.DONE, Toast.LENGTH_SHORT).show();
             this.finish();
         }
         return result;

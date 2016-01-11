@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ihsan.brighterbrain.R;
 import com.ihsan.brighterbrain.commons.Constants;
@@ -79,6 +80,7 @@ public class ItemDetailActivity extends BaseItemActivity {
 
     private void deleteItem() {
         SugarRecord.delete(item);
+        item.deleteItemFromParse();
         this.finish();
     }
 
@@ -142,6 +144,8 @@ public class ItemDetailActivity extends BaseItemActivity {
     protected boolean saveItem(){
         boolean result = super.saveItem();
         if(result){
+            item.updateToParse();
+            Toast.makeText(this, item.getName() + Constants.DONE, Toast.LENGTH_SHORT).show();
             setReadMode();
         }
         return result;

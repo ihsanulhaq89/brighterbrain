@@ -26,5 +26,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.github.satyan:sugar:1.4'
     compile 'com.googlecode.android-query:android-query:0.25.9'
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile 'com.parse:parse-android:1.+'
 
 }

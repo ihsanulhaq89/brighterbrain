@@ -14,4 +14,8 @@
     <string name="txt_collection">Collections</string>
     <string name="txt_new_item">New item</string>
     <string name="txt_item_detail">Item detail</string>
+    <string name="parse_app_id">Htc100v3GZPA40zdeLGWfSmw0J0k5EXp8RHc9DZ2</string>
+    <string name="parse_client_key">0Phpq6SIzljZfzPthzxmE8hk4PCdqwWRYBbPraaM</string>
+    <string name="wait">Please wait</string>
+    <string name="saving">Saving</string>
 </resources>

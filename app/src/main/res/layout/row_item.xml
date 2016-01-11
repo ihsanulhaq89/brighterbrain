@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ihsan.brighterbrain.customviews.GridItem xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:elevation="@dimen/elevation"
     android:layout_height="match_parent">
     <ImageView
-        android:background="@android:color/black"
+        android:background="@drawable/placeholder"
         android:id="@+id/image"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <TextView
         android:id="@+id/name"
+        android:gravity="center"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_alignParentBottom="true"
-        android:text="Hello"
         android:textColor="@android:color/white"
         android:singleLine="true"
+        android:elevation="@dimen/elevation"
+        android:background="@color/grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

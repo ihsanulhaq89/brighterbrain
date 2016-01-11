@@ -2,13 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ihsan.brighterbrain" >
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />\
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
-        android:name="com.orm.SugarApp"
+        android:name="com.ihsan.brighterbrain.BrighterBrainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="gr9KiC5cZP4MnQeLOMMVAJGtAneJcG97Flakw9Ao" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="9gTU67VxjAbmSDGrJATpuOHXuwkiGrYuOdnmavJD" />
         <meta-data android:name="DATABASE" android:value="items.db" />
         <meta-data android:name="VERSION" android:value="2" />
         <meta-data android:name="QUERY_LOG" android:value="true" />

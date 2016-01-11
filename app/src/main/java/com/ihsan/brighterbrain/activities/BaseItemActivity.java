@@ -2,6 +2,7 @@ package com.ihsan.brighterbrain.activities;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import com.ihsan.brighterbrain.commons.Constants;
 import com.ihsan.brighterbrain.commons.MediaUtils;
 import com.ihsan.brighterbrain.models.Item;
 import com.orm.SugarRecord;
+import com.parse.ParseException;
 
 /**
  * Created by ihsan on 1/11/2016.
@@ -71,10 +73,8 @@ public abstract class BaseItemActivity extends BaseAppCompatActivity implements 
             item.setCost(cost.getText().toString());
             item.setName(name.getText().toString());
             item.setDescription(description.getText().toString());
-            item.setDescription(description.getText().toString());
             item.setImage(filePath);
             SugarRecord.save(item);
-            Toast.makeText(this, item.getName() + Constants.DONE, Toast.LENGTH_SHORT);
         }
         return !error;
     }
@@ -90,7 +90,7 @@ public abstract class BaseItemActivity extends BaseAppCompatActivity implements 
 
     protected void clearAttachment() {
         filePath = null;
-        attachment.setImageDrawable(null);
+        attachment.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.placeholder));
         setFab();
     }
 

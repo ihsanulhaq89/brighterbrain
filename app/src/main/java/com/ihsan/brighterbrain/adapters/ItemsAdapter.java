@@ -37,16 +37,6 @@ public class ItemsAdapter  extends RecyclerView.Adapter<ItemsViewHolder>{
         public void onBindViewHolder(ItemsViewHolder customViewHolder, int i) {
             Item item = itemList.get(i);
             customViewHolder.paint(item);
-            /*
-            //Download image using picasso library
-            Picasso.with(mContext).load(feedItem.getThumbnail())
-                    .error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder)
-                    .into(customViewHolder.imageView);
-
-            //Setting text view title
-            customViewHolder.textView.setText(Html.fromHtml(feedItem.getTitle()));
-            */
         }
 
         @Override

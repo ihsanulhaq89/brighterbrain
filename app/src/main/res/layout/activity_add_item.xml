@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.6"
-                android:background="@android:color/holo_purple"
+                android:src="@drawable/placeholder"
                 android:orientation="horizontal"/>
 
             <LinearLayout
@@ -54,6 +54,8 @@
                         android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:singleLine="true"
                         android:hint="@string/txt_name" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -64,7 +66,9 @@
                     <EditText
                         android:id="@+id/et_description"
                         android:layout_width="match_parent"
+                        android:singleLine="true"
                         android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
                         android:hint="@string/txt_description" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -77,6 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
+                        android:singleLine="true"
                         android:hint="@string/txt_cost" />
                 </android.support.design.widget.TextInputLayout>
 

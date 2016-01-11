@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.androidquery.AQuery;
 import com.androidquery.callback.BitmapAjaxCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -86,5 +87,10 @@ public class MediaUtils {
             return true;
         }
         return false;
+    }
+    public static byte[] bitmapToByteArray(Bitmap bmp) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
     }
 }

@@ -3,6 +3,7 @@ package com.ihsan.brighterbrain.viewholders;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,8 +37,9 @@ public class ItemsViewHolder extends ViewHolder implements View.OnClickListener{
     public void paint(Item item){
         this.item = item;
         name.setText(item.getName());
-        MediaUtils.setImageFromFile(context, item.getImage(), image);
-
+        if(image != null) {
+            MediaUtils.setImageFromFile(context, item.getImage(), image);
+        }
     }
     @Override
     public void onClick(View v) {
